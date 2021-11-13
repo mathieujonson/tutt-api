@@ -86,15 +86,6 @@ func sendToSlack(data []byte) {
         panic(err.Error())
     }
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		panic(err.Error())
-	}
-	
-	fmt.Println("sendToSlack response:")
-	fmt.Println("statusCode: ", resp.StatusCode)
-	fmt.Println("body: ", string(body))
-
     defer resp.Body.Close()
 }
 
@@ -123,16 +114,12 @@ func postThing(state State) string {
         panic(err.Error())
     }
     
-	fmt.Println("statusCode: ", resp.StatusCode)
-	fmt.Println("theThingId: ", string(tuttResponse.TheThingId))
-
     defer resp.Body.Close()
 
 	return tuttResponse.TheThingId
 }
 
 func getThingLinkJson(theThingId string) []byte {
-	fmt.Println("theThingId: ", theThingId)
 	return []byte(`{
 		"response_action": "update",
 		"view": {
